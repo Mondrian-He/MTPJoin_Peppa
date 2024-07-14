@@ -36,7 +36,9 @@ SGX_MODE ?= SIM
 SGX_ARCH ?= x64
 SGX_DEBUG ?= 1
 
-OPENSSL_SGX_PATH = /home/yy/yy_test/SGX-OpenSSL/OpenSSL_SGX
+# OPENSSL_SGX_PATH = /home/yy/yy_test/SGX-OpenSSL/OpenSSL_SGX
+OPENSSL_SGX_PATH =/opt/intel/SGX-OpenSSL/OpenSSL_SGX
+
 OPENSSL_SGX_INC = -I$(OPENSSL_SGX_PATH)/include
 OPENSSL_LIBS = -lssl -lcrypto
 
@@ -130,8 +132,10 @@ ifeq ($(CC_BELOW_4_9), 1)
 else
 	Enclave_C_Flags += -fstack-protector-strong
 endif
+# add C++11
+# Enclave_Cpp_Flags := $(Enclave_C_Flags) -nostdinc++
+Enclave_Cpp_Flags := $(Enclave_C_Flags) -std=c++11 -nostdinc++
 
-Enclave_Cpp_Flags := $(Enclave_C_Flags) -nostdinc++
 
 # To generate a proper enclave, it is recommended to follow below guideline to link the trusted libraries:
 #    1. Link sgx_trts with the `--whole-archive' and `--no-whole-archive' options,
@@ -218,9 +222,9 @@ App/Enclave_u.o: App/Enclave_u.c
 App/%.o: App/%.cpp App/Enclave_u.c
 	@$(CXX) $(App_Cpp_Flags) -c $< -o $@
 	@echo "CXX  <=  $<"
-
+#add share
 $(App_Name): App/Enclave_u.o $(App_Cpp_Objects)
-	@$(CXX) $^ -o $@ $(App_Link_Flags)
+	@$(CXX) -shared $^ -o $@ $(App_Link_Flags)
 	@echo "LINK =>  $@"
 
 

@@ -36,7 +36,7 @@
 #include "kdtree.h"
 #include "BloomFilter.h"
 #include "BIGSI.h"
-#include "CSCBF.h"
+#include "SBF.h"
 #include "Ocall_wrappers.h"
 
 #include <stdarg.h>
