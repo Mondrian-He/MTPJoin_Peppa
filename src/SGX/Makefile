@@ -30,8 +30,8 @@
 #
 
 ######## SGX SDK Settings ########
-
-SGX_SDK ?= /home/yy/yy_test/sgxsdk
+SGX_SDK ?= /opt/intel/sgxsdk
+# SGX_SDK ?= /home/yy/yy_test/sgxsdk
 SGX_MODE ?= SIM
 SGX_ARCH ?= x64
 SGX_DEBUG ?= 1
